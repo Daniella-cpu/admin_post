@@ -16,15 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       $users = factory(User::class, 10)->create()->each(function ($user) {
-            $user->posts()->saveMany(factory(Post::class)->make());
-        });
-//        $user = \App\Models\User::factory()->count(10)->create()
+
+        $user = User::factory()->count(30)
+            ->has(Post::factory()->count(3), 'posts')
+            ->create();
+
+//       $users = factory(User::class, 10)->create()->each(function ($user) {
+//            $user->posts()->saveMany(factory(Post::class)->make());
+//        });
+//          User::factory()->count(3)->create()
 //            ->each(function ($user) {
 ////                var_dump($user);
-//                $user->posts()->save(factory(\App\Models\Post::class, 10)->make());
+//                $user->posts->save(factory(Post::class, 10)->make());
 //            });
-//
+
 
     }
 }

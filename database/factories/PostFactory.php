@@ -19,9 +19,10 @@ class PostFactory extends Factory
 
         return [
             'user_id' => factory(User::class),
-            'title' => faker->title,
-            'post_image' => faker->imageUrl('900', '300'),
-            'body' => faker->paragraph
+//            'user_id' => mt_rand(1, 3),
+            'title' => $this->faker->text(25),
+            'post_image' => $this->faker->imageUrl('900', '300'),
+            'body' => $this->faker->paragraph()
             //
         ];
     }

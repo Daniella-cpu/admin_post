@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,8 +19,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
+        'avatar',
         'password',
     ];
 
@@ -42,7 +45,45 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+//    (mutators)encrpt password whenever we update the user profile
+    public function setPasswordAttribute($value){
+         $this->attributes['password'] = bcrypt($value);
+    }
+
+//    public function getAvatarAttribute($value){
+//        return asset($value);
+//    }
+
     public function posts(){
+
         return $this->hasMany(Post::class);
     }
+
+    public function roles(){
+
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function permission(){
+
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function userHasRole($role_name){
+
+        foreach ($this->roles as $role){
+            if (Str::lower($role_name) == Str::lower($role->name)){
+                return true;
+            }
+
+        }
+    }
+
+//    public function userHasPost(){
+//        foreach ($this->posts as $post){
+//            if ($post == ""){
+//                return "has no post";
+//            }
+//        }
+//    }
 }
