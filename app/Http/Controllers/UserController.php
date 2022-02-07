@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,12 @@ class UserController extends Controller
     }
     public function show(User $user){
 
-        return view('admin.users.profile', compact('user'));
+//        $this->authorize('view', Auth::user(), ['user']);
+
+        return view('admin.users.profile', [
+            'user' => $user,
+            'roles' => Role::all()
+        ]);
     }
 
     public function update($id, Request $request){
@@ -26,14 +32,25 @@ class UserController extends Controller
             'username' => ['required', 'string', 'alpha_dash'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
-            'avatar' => ['required', 'image'],
+            'avatar' => ['file:jpeg.png'],
         ]);
 
         if ($request->avatar){
+
             $input['avatar'] = $request->avatar->store('images');
         }
         auth()->user()->update(array_merge($input));
 
+        return back();
+    }
+
+    public function attach(User $user){
+        $user->roles()->attach(request('role'));
+        return back();
+    }
+
+    public function detach(User $user){
+        $user->roles()->detach(request('role'));
         return back();
     }
 

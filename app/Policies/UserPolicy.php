@@ -17,7 +17,10 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+//        if ($user->userHasRole('admin')){
+//
+//            return true;
+//        }
     }
 
     /**
@@ -29,11 +32,12 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        if ($user->userHasRole('admin')){
+        if ($user->userHasRole('admin') || $user->id === $model->id){
 
             return true;
+
         }
-//        return $user->userHasRole('admin') ?: $user->id == $model->id;
+//        return $user->userHasRole('Admin') ?: $user->id === $model->id;
     }
 
     /**

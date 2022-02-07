@@ -10,7 +10,6 @@
             @endif
             <div class="card-body">
                 <div class="table-responsive">
-{{--                    @if(auth()->user()->userHasPost)--}}
                     <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
@@ -41,7 +40,7 @@
                         @foreach($user as $users)
                             <tr>
                                 <td>{{$users->id}}</td>
-                                <td>{{$users->username}}</td>
+                                <td><a href="{{route('admin.users.show', $users->id)}}">{{$users->username}}</a></td>
                                 <td>{{$users->name}}</td>
                                 <td>{{$users->email}}</td>
                                 <td>
@@ -54,7 +53,13 @@
                                     <form method="post" action="{{route('user.delete', $users->id)}}">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger">Delete</button>
+                                        <button class="btn btn-danger
+
+                                        @if(auth()->user()->name === $users->name)
+                                            disabled
+                                        @endif
+
+                                        ">Delete</button>
                                     </form>
 {{--                                                                @endcan--}}
                                 </td>

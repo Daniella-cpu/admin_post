@@ -63,7 +63,9 @@
 
             <x-users-sidebar-links> </x-users-sidebar-links>
 
-        @endif
+            <x-authorization-sidebar-links></x-authorization-sidebar-links>
+
+         @endif
 
 
 

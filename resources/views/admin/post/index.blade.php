@@ -1,6 +1,5 @@
 <x-admin-master>
     @section('content')
-        <h1>All post</h1>
     @if(session('message'))
 
         <div class="alert alert-danger">{{session('message')}}</div>
@@ -8,14 +7,9 @@
         @elseif(session('post-message'))
             <div class="alert alert-success">{{session('post-message')}}</div>
 
-
         @endif
-{{--        @if(session('create-post-message'))--}}
-{{--            <div class="alert alert-success">{{session('create-post-message')}}</div>--}}
-{{--        @endif--}}
-{{--    @if(Session::has('message'))--}}
-{{--          <div class="alert alert-danger">{{Session::get('message')}}</div>--}}
-{{--        @endif--}}
+
+    @if($posts->isNotEmpty())
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
@@ -71,6 +65,7 @@
                         </td>
 
                     </tr>
+
                     @endforeach
 
                     </tbody>
@@ -78,6 +73,12 @@
             </div>
         </div>
         </div>
+
+        @else()
+        <h1>No Post created</h1>
+
+        @endif
+
         <div class="d-flex">
             <div class="mx-auto">
                 {{$posts->links()}}

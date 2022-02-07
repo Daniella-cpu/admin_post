@@ -85,16 +85,11 @@ class PostController extends Controller
 
     }
 
-    public function delete(Post $post, Request $request){
+    public function delete($id, Request $request){
 
-//        $post = Auth::user()->posts()->delete();
-        $this->authorize('delete', $post);
+        $post = Post::findOrFail($id);
         $post->delete();
 
-//         auth()->user()->posts()->delete();
-
-
-//
 
         $request->session()->flash('message', 'post was deleted');
 

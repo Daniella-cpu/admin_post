@@ -17,19 +17,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        $user = User::factory()->count(30)
+        $user = User::factory()->count(10)
             ->has(Post::factory()->count(3), 'posts')
             ->create();
-
-//       $users = factory(User::class, 10)->create()->each(function ($user) {
-//            $user->posts()->saveMany(factory(Post::class)->make());
-//        });
-//          User::factory()->count(3)->create()
-//            ->each(function ($user) {
-////                var_dump($user);
-//                $user->posts->save(factory(Post::class, 10)->make());
-//            });
-
 
     }
 }
